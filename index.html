@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Equity fundamentals dashboards</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root { color-scheme: light dark; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+         max-width: 900px; margin: 48px auto; padding: 0 20px; line-height: 1.55;
+         color: #ddd; background: #111; }
+  @media (prefers-color-scheme: light) { body { color: #222; background: #fff; } }
+  h1 { font-size: 26px; margin: 0 0 6px; }
+  .sub { color: #888; font-size: 14px; margin-bottom: 32px; }
+  ul.cards { list-style: none; padding: 0; display: grid; gap: 12px;
+             grid-template-columns: 1fr; }
+  @media (min-width: 640px) { ul.cards { grid-template-columns: 1fr 1fr; } }
+  a.card { display: block; border: 1px solid #8883; border-radius: 10px;
+           padding: 14px 16px; text-decoration: none; color: inherit; transition: border-color .12s; }
+  a.card:hover { border-color: #6ab7ff; }
+  .tic { font-weight: 650; font-size: 16px; }
+  .nm { color: #888; font-size: 13px; }
+  .note { margin-top: 34px; padding-top: 18px; border-top: 1px solid #8883;
+          color: #888; font-size: 13px; }
+  code { background: #8882; padding: 1px 5px; border-radius: 4px; font-size: 12px; }
+</style>
+</head>
+<body>
+<h1>Equity fundamentals dashboards</h1>
+<div class="sub">Ten-year and ten-quarter views of the balance sheet, income statement, and cash flow —
+each with a period-over-period growth table and a Liabilities ÷ Assets leverage line.
+Charts are pre-rendered inline SVG: no JavaScript charting library, no CDN, no external requests.</div>
+
+<ul class="cards">
+  <li><a class="card" href="dashboards/nvda.html"><span class="tic">NVDA</span> <span class="nm">— NVIDIA · AI compute</span></a></li>
+  <li><a class="card" href="dashboards/googl.html"><span class="tic">GOOGL</span> <span class="nm">— Alphabet · cloud &amp; search</span></a></li>
+  <li><a class="card" href="dashboards/lly.html"><span class="tic">LLY</span> <span class="nm">— Eli Lilly · pharma</span></a></li>
+  <li><a class="card" href="dashboards/ceg.html"><span class="tic">CEG</span> <span class="nm">— Constellation Energy · nuclear power</span></a></li>
+  <li><a class="card" href="dashboards/crdo.html"><span class="tic">CRDO</span> <span class="nm">— Credo Technology · AI interconnect</span></a></li>
+</ul>
+
+<div class="note">
+Each page is a single self-contained HTML file. Hovering any bar, trend-line segment, or point
+shows the exact figure. Underlying financials are sourced from Alpha Vantage; the raw vendor data
+series is <strong>not</strong> redistributed here — only the rendered charts. Figures are as-reported
+and were spot-checked against company filings, but this is a personal research project shown as a
+work sample, <strong>not investment advice</strong>.
+</div>
+</body>
+</html>

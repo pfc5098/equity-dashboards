@@ -1,0 +1,855 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>NVIDIA (NVDA) — fundamentals dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root { color-scheme: light dark; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; max-width: 1280px; margin: 24px auto; padding: 0 16px; color: #ddd; background: #111; }
+  @media (prefers-color-scheme: light) { body { color: #222; background: #fff; } }
+  header { margin-bottom: 20px; }
+  h1 { margin: 0 0 4px 0; font-size: 22px; }
+  .meta { color: #888; font-size: 13px; }
+  .grid { display: grid; grid-template-columns: 1fr; gap: 22px; }
+  .card { border: 1px solid #8883; border-radius: 10px; padding: 8px 10px; }
+  .card svg { width: 100%; height: auto; display: block; }
+  .card svg rect.bar { transition: opacity .1s; }
+  .card svg rect.bar:hover { opacity: 0.72; }
+  .card svg [data-tip] { cursor: default; }
+  @media (min-width: 920px) { .grid { grid-template-columns: 1fr 1fr; } }
+  footer { margin-top: 28px; color: #888; font-size: 12px; }
+  /* instant cursor-following tooltip (replaces slow native <title>) */
+  #chart-tip { position: fixed; z-index: 9999; pointer-events: none; display: none;
+    background: rgba(20,20,20,.96); color: #fff; border: 1px solid #8886; border-radius: 6px;
+    padding: 5px 9px; font-size: 12px; line-height: 1.35; white-space: nowrap;
+    box-shadow: 0 2px 10px rgba(0,0,0,.35); }
+</style>
+</head>
+<body>
+<header>
+  <h1>NVIDIA (NVDA) — fundamentals</h1>
+  <div class="meta">Source: Alpha Vantage · most recent period: 2026-04-30 · values in USD billions</div>
+</header>
+<main class="grid">
+  <section class="card"><svg viewBox="0 0 600 456" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">
+<text x="300.0" y="20" text-anchor="middle" font-size="15" font-weight="600" fill="currentColor">NVDA balance sheet — last 10 years</text>
+<text x="300.0" y="36" text-anchor="middle" font-size="10.5" fill="#888">bars: YoY % change · dashed purple line = Liabilities ÷ Assets (right axis %; L/A row = ratio level)</text>
+<rect x="60" y="44" width="11" height="11" rx="2" fill="#1f77b4"/>
+<text x="75" y="53.5" font-size="10.5" fill="currentColor">Total Assets</text>
+<rect x="162.0" y="44" width="11" height="11" rx="2" fill="#d62728"/>
+<text x="177.0" y="53.5" font-size="10.5" fill="currentColor">Total Liabilities</text>
+<rect x="294.0" y="44" width="11" height="11" rx="2" fill="#2ca02c"/>
+<text x="309.0" y="53.5" font-size="10.5" fill="currentColor">Shareholder Equity</text>
+<rect x="432.0" y="44" width="11" height="11" rx="2" fill="#9467bd"/>
+<text x="447.0" y="53.5" font-size="10.5" fill="currentColor">Liab/Assets ratio</text>
+<line x1="60" y1="348.0" x2="554" y2="348.0" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="351.0" text-anchor="end" font-size="9" fill="#999">$0.0B</text>
+<line x1="60" y1="284.3" x2="554" y2="284.3" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="287.3" text-anchor="end" font-size="9" fill="#999">$50.0B</text>
+<line x1="60" y1="220.5" x2="554" y2="220.5" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="223.5" text-anchor="end" font-size="9" fill="#999">$100.0B</text>
+<line x1="60" y1="156.8" x2="554" y2="156.8" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="159.8" text-anchor="end" font-size="9" fill="#999">$150.0B</text>
+<line x1="60" y1="93.0" x2="554" y2="93.0" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="96.0" text-anchor="end" font-size="9" fill="#999">$200.0B</text>
+<line x1="60" y1="348.0" x2="554" y2="348.0" stroke="#888" stroke-width="1"/>
+<line x1="554" y1="348.0" x2="558" y2="348.0" stroke="#9467bd" stroke-width="0.8"/>
+<text x="560.0" y="351.0" text-anchor="start" font-size="9" fill="#9467bd">0%</text>
+<line x1="554" y1="275.5" x2="558" y2="275.5" stroke="#9467bd" stroke-width="0.8"/>
+<text x="560.0" y="278.5" text-anchor="start" font-size="9" fill="#9467bd">25%</text>
+<line x1="554" y1="203.0" x2="558" y2="203.0" stroke="#9467bd" stroke-width="0.8"/>
+<text x="560.0" y="206.0" text-anchor="start" font-size="9" fill="#9467bd">50%</text>
+<line x1="554" y1="130.5" x2="558" y2="130.5" stroke="#9467bd" stroke-width="0.8"/>
+<text x="560.0" y="133.5" text-anchor="start" font-size="9" fill="#9467bd">75%</text>
+<line x1="554" y1="58.0" x2="558" y2="58.0" stroke="#9467bd" stroke-width="0.8"/>
+<text x="560.0" y="61.0" text-anchor="start" font-size="9" fill="#9467bd">100%</text>
+<rect class="bar" x="66.9" y="335.5" width="10.2" height="12.5" fill="#1f77b4" data-tip="Total Assets · FY17: $9.841B  ($9,841,000,000)"/>
+<rect class="bar" x="116.3" y="333.7" width="10.2" height="14.3" fill="#1f77b4" data-tip="Total Assets · FY18: $11.241B  ($11,241,000,000)"/>
+<rect class="bar" x="165.7" y="331.1" width="10.2" height="16.9" fill="#1f77b4" data-tip="Total Assets · FY19: $13.292B  ($13,292,000,000)"/>
+<rect class="bar" x="215.1" y="325.9" width="10.2" height="22.1" fill="#1f77b4" data-tip="Total Assets · FY20: $17.315B  ($17,315,000,000)"/>
+<rect class="bar" x="264.5" y="311.3" width="10.2" height="36.7" fill="#1f77b4" data-tip="Total Assets · FY21: $28.791B  ($28,791,000,000)"/>
+<rect class="bar" x="313.9" y="291.7" width="10.2" height="56.3" fill="#1f77b4" data-tip="Total Assets · FY22: $44.187B  ($44,187,000,000)"/>
+<rect class="bar" x="363.3" y="295.5" width="10.2" height="52.5" fill="#1f77b4" data-tip="Total Assets · FY23: $41.182B  ($41,182,000,000)"/>
+<rect class="bar" x="412.7" y="264.2" width="10.2" height="83.8" fill="#1f77b4" data-tip="Total Assets · FY24: $65.728B  ($65,728,000,000)"/>
+<rect class="bar" x="462.1" y="205.7" width="10.2" height="142.3" fill="#1f77b4" data-tip="Total Assets · FY25: $111.601B  ($111,601,000,000)"/>
+<rect class="bar" x="511.5" y="84.4" width="10.2" height="263.6" fill="#1f77b4" data-tip="Total Assets · FY26: $206.803B  ($206,803,000,000)"/>
+<rect class="bar" x="78.8" y="342.8" width="10.2" height="5.2" fill="#d62728" data-tip="Total Liabilities · FY17: $4.079B  ($4,079,000,000)"/>
+<rect class="bar" x="128.2" y="343.2" width="10.2" height="4.8" fill="#d62728" data-tip="Total Liabilities · FY18: $3.770B  ($3,770,000,000)"/>
+<rect class="bar" x="177.6" y="343.0" width="10.2" height="5.0" fill="#d62728" data-tip="Total Liabilities · FY19: $3.950B  ($3,950,000,000)"/>
+<rect class="bar" x="227.0" y="341.5" width="10.2" height="6.5" fill="#d62728" data-tip="Total Liabilities · FY20: $5.111B  ($5,111,000,000)"/>
+<rect class="bar" x="276.4" y="332.8" width="10.2" height="15.2" fill="#d62728" data-tip="Total Liabilities · FY21: $11.898B  ($11,898,000,000)"/>
+<rect class="bar" x="325.8" y="325.6" width="10.2" height="22.4" fill="#d62728" data-tip="Total Liabilities · FY22: $17.575B  ($17,575,000,000)"/>
+<rect class="bar" x="375.2" y="323.7" width="10.2" height="24.3" fill="#d62728" data-tip="Total Liabilities · FY23: $19.081B  ($19,081,000,000)"/>
+<rect class="bar" x="424.6" y="319.0" width="10.2" height="29.0" fill="#d62728" data-tip="Total Liabilities · FY24: $22.750B  ($22,750,000,000)"/>
+<rect class="bar" x="474.0" y="306.9" width="10.2" height="41.1" fill="#d62728" data-tip="Total Liabilities · FY25: $32.274B  ($32,274,000,000)"/>
+<rect class="bar" x="523.4" y="284.9" width="10.2" height="63.1" fill="#d62728" data-tip="Total Liabilities · FY26: $49.510B  ($49,510,000,000)"/>
+<rect class="bar" x="90.6" y="340.7" width="10.2" height="7.3" fill="#2ca02c" data-tip="Shareholder Equity · FY17: $5.762B  ($5,762,000,000)"/>
+<rect class="bar" x="140.0" y="338.5" width="10.2" height="9.5" fill="#2ca02c" data-tip="Shareholder Equity · FY18: $7.471B  ($7,471,000,000)"/>
+<rect class="bar" x="189.4" y="336.1" width="10.2" height="11.9" fill="#2ca02c" data-tip="Shareholder Equity · FY19: $9.342B  ($9,342,000,000)"/>
+<rect class="bar" x="238.8" y="332.4" width="10.2" height="15.6" fill="#2ca02c" data-tip="Shareholder Equity · FY20: $12.204B  ($12,204,000,000)"/>
+<rect class="bar" x="288.2" y="326.5" width="10.2" height="21.5" fill="#2ca02c" data-tip="Shareholder Equity · FY21: $16.893B  ($16,893,000,000)"/>
+<rect class="bar" x="337.6" y="314.1" width="10.2" height="33.9" fill="#2ca02c" data-tip="Shareholder Equity · FY22: $26.612B  ($26,612,000,000)"/>
+<rect class="bar" x="387.0" y="319.8" width="10.2" height="28.2" fill="#2ca02c" data-tip="Shareholder Equity · FY23: $22.101B  ($22,101,000,000)"/>
+<rect class="bar" x="436.4" y="293.2" width="10.2" height="54.8" fill="#2ca02c" data-tip="Shareholder Equity · FY24: $42.978B  ($42,978,000,000)"/>
+<rect class="bar" x="485.8" y="246.9" width="10.2" height="101.1" fill="#2ca02c" data-tip="Shareholder Equity · FY25: $79.327B  ($79,327,000,000)"/>
+<rect class="bar" x="535.2" y="147.5" width="10.2" height="200.5" fill="#2ca02c" data-tip="Shareholder Equity · FY26: $157.293B  ($157,293,000,000)"/>
+<path d="M 84.7 227.8 L 134.1 250.7 L 183.5 261.8 L 232.9 262.4 L 282.3 228.2 L 331.7 232.7 L 381.1 213.6 L 430.5 247.6 L 479.9 264.1 L 529.3 278.6" fill="none" stroke="#9467bd" stroke-width="2.2" stroke-dasharray="5 3" pointer-events="none"/>
+<line x1="84.7" y1="227.8" x2="134.1" y2="250.7" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Liab/Assets ratio · FY17→FY18: 41.4% → 33.5%"/>
+<line x1="134.1" y1="250.7" x2="183.5" y2="261.8" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Liab/Assets ratio · FY18→FY19: 33.5% → 29.7%"/>
+<line x1="183.5" y1="261.8" x2="232.9" y2="262.4" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Liab/Assets ratio · FY19→FY20: 29.7% → 29.5%"/>
+<line x1="232.9" y1="262.4" x2="282.3" y2="228.2" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Liab/Assets ratio · FY20→FY21: 29.5% → 41.3%"/>
+<line x1="282.3" y1="228.2" x2="331.7" y2="232.7" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Liab/Assets ratio · FY21→FY22: 41.3% → 39.8%"/>
+<line x1="331.7" y1="232.7" x2="381.1" y2="213.6" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Liab/Assets ratio · FY22→FY23: 39.8% → 46.3%"/>
+<line x1="381.1" y1="213.6" x2="430.5" y2="247.6" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Liab/Assets ratio · FY23→FY24: 46.3% → 34.6%"/>
+<line x1="430.5" y1="247.6" x2="479.9" y2="264.1" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Liab/Assets ratio · FY24→FY25: 34.6% → 28.9%"/>
+<line x1="479.9" y1="264.1" x2="529.3" y2="278.6" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Liab/Assets ratio · FY25→FY26: 28.9% → 23.9%"/>
+<circle cx="84.7" cy="227.8" r="9" fill="transparent" pointer-events="all" data-tip="Liab/Assets ratio · FY17: 41.4%"/>
+<circle cx="84.7" cy="227.8" r="2.6" fill="#9467bd" pointer-events="none"/>
+<circle cx="134.1" cy="250.7" r="9" fill="transparent" pointer-events="all" data-tip="Liab/Assets ratio · FY18: 33.5%"/>
+<circle cx="134.1" cy="250.7" r="2.6" fill="#9467bd" pointer-events="none"/>
+<circle cx="183.5" cy="261.8" r="9" fill="transparent" pointer-events="all" data-tip="Liab/Assets ratio · FY19: 29.7%"/>
+<circle cx="183.5" cy="261.8" r="2.6" fill="#9467bd" pointer-events="none"/>
+<circle cx="232.9" cy="262.4" r="9" fill="transparent" pointer-events="all" data-tip="Liab/Assets ratio · FY20: 29.5%"/>
+<circle cx="232.9" cy="262.4" r="2.6" fill="#9467bd" pointer-events="none"/>
+<circle cx="282.3" cy="228.2" r="9" fill="transparent" pointer-events="all" data-tip="Liab/Assets ratio · FY21: 41.3%"/>
+<circle cx="282.3" cy="228.2" r="2.6" fill="#9467bd" pointer-events="none"/>
+<circle cx="331.7" cy="232.7" r="9" fill="transparent" pointer-events="all" data-tip="Liab/Assets ratio · FY22: 39.8%"/>
+<circle cx="331.7" cy="232.7" r="2.6" fill="#9467bd" pointer-events="none"/>
+<circle cx="381.1" cy="213.6" r="9" fill="transparent" pointer-events="all" data-tip="Liab/Assets ratio · FY23: 46.3%"/>
+<circle cx="381.1" cy="213.6" r="2.6" fill="#9467bd" pointer-events="none"/>
+<circle cx="430.5" cy="247.6" r="9" fill="transparent" pointer-events="all" data-tip="Liab/Assets ratio · FY24: 34.6%"/>
+<circle cx="430.5" cy="247.6" r="2.6" fill="#9467bd" pointer-events="none"/>
+<circle cx="479.9" cy="264.1" r="9" fill="transparent" pointer-events="all" data-tip="Liab/Assets ratio · FY25: 28.9%"/>
+<circle cx="479.9" cy="264.1" r="2.6" fill="#9467bd" pointer-events="none"/>
+<circle cx="529.3" cy="278.6" r="9" fill="transparent" pointer-events="all" data-tip="Liab/Assets ratio · FY26: 23.9%"/>
+<circle cx="529.3" cy="278.6" r="2.6" fill="#9467bd" pointer-events="none"/>
+<text x="84.7" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY17</text>
+<text x="134.1" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY18</text>
+<text x="183.5" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY19</text>
+<text x="232.9" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY20</text>
+<text x="282.3" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY21</text>
+<text x="331.7" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY22</text>
+<text x="381.1" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY23</text>
+<text x="430.5" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY24</text>
+<text x="479.9" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY25</text>
+<text x="529.3" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY26</text>
+<text x="54" y="392.8" text-anchor="end" font-size="9" fill="#1f77b4">Assets</text>
+<text x="84.7" y="392.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+34%</text>
+<text x="134.1" y="392.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+14%</text>
+<text x="183.5" y="392.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+18%</text>
+<text x="232.9" y="392.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+30%</text>
+<text x="282.3" y="392.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+66%</text>
+<text x="331.7" y="392.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+53%</text>
+<text x="381.1" y="392.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">-7%</text>
+<text x="430.5" y="392.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+60%</text>
+<text x="479.9" y="392.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+70%</text>
+<text x="529.3" y="392.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+85%</text>
+<text x="54" y="407.8" text-anchor="end" font-size="9" fill="#d62728">Liab</text>
+<text x="84.7" y="407.8" text-anchor="middle" font-size="8.5" fill="#d62728">+41%</text>
+<text x="134.1" y="407.8" text-anchor="middle" font-size="8.5" fill="#d62728">-8%</text>
+<text x="183.5" y="407.8" text-anchor="middle" font-size="8.5" fill="#d62728">+5%</text>
+<text x="232.9" y="407.8" text-anchor="middle" font-size="8.5" fill="#d62728">+29%</text>
+<text x="282.3" y="407.8" text-anchor="middle" font-size="8.5" fill="#d62728">+133%</text>
+<text x="331.7" y="407.8" text-anchor="middle" font-size="8.5" fill="#d62728">+48%</text>
+<text x="381.1" y="407.8" text-anchor="middle" font-size="8.5" fill="#d62728">+9%</text>
+<text x="430.5" y="407.8" text-anchor="middle" font-size="8.5" fill="#d62728">+19%</text>
+<text x="479.9" y="407.8" text-anchor="middle" font-size="8.5" fill="#d62728">+42%</text>
+<text x="529.3" y="407.8" text-anchor="middle" font-size="8.5" fill="#d62728">+53%</text>
+<text x="54" y="422.8" text-anchor="end" font-size="9" fill="#2ca02c">Equity</text>
+<text x="84.7" y="422.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+29%</text>
+<text x="134.1" y="422.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+30%</text>
+<text x="183.5" y="422.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+25%</text>
+<text x="232.9" y="422.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+31%</text>
+<text x="282.3" y="422.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+38%</text>
+<text x="331.7" y="422.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+58%</text>
+<text x="381.1" y="422.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">-17%</text>
+<text x="430.5" y="422.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+94%</text>
+<text x="479.9" y="422.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+85%</text>
+<text x="529.3" y="422.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+98%</text>
+<text x="54" y="437.8" text-anchor="end" font-size="9" fill="#9467bd">L/A</text>
+<text x="84.7" y="437.8" text-anchor="middle" font-size="8.5" fill="#9467bd">41%</text>
+<text x="134.1" y="437.8" text-anchor="middle" font-size="8.5" fill="#9467bd">34%</text>
+<text x="183.5" y="437.8" text-anchor="middle" font-size="8.5" fill="#9467bd">30%</text>
+<text x="232.9" y="437.8" text-anchor="middle" font-size="8.5" fill="#9467bd">30%</text>
+<text x="282.3" y="437.8" text-anchor="middle" font-size="8.5" fill="#9467bd">41%</text>
+<text x="331.7" y="437.8" text-anchor="middle" font-size="8.5" fill="#9467bd">40%</text>
+<text x="381.1" y="437.8" text-anchor="middle" font-size="8.5" fill="#9467bd">46%</text>
+<text x="430.5" y="437.8" text-anchor="middle" font-size="8.5" fill="#9467bd">35%</text>
+<text x="479.9" y="437.8" text-anchor="middle" font-size="8.5" fill="#9467bd">29%</text>
+<text x="529.3" y="437.8" text-anchor="middle" font-size="8.5" fill="#9467bd">24%</text>
+</svg></section>
+  <section class="card"><svg viewBox="0 0 600 468" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">
+<text x="300.0" y="20" text-anchor="middle" font-size="15" font-weight="600" fill="currentColor">NVDA balance sheet — last 10 quarters</text>
+<text x="300.0" y="36" text-anchor="middle" font-size="10.5" fill="#888">bars: QoQ % change · dashed purple line = Liabilities ÷ Assets (right axis %; L/A row = ratio level)</text>
+<rect x="60" y="44" width="11" height="11" rx="2" fill="#1f77b4"/>
+<text x="75" y="53.5" font-size="10.5" fill="currentColor">Total Assets</text>
+<rect x="162.0" y="44" width="11" height="11" rx="2" fill="#d62728"/>
+<text x="177.0" y="53.5" font-size="10.5" fill="currentColor">Total Liabilities</text>
+<rect x="294.0" y="44" width="11" height="11" rx="2" fill="#2ca02c"/>
+<text x="309.0" y="53.5" font-size="10.5" fill="currentColor">Shareholder Equity</text>
+<rect x="432.0" y="44" width="11" height="11" rx="2" fill="#9467bd"/>
+<text x="447.0" y="53.5" font-size="10.5" fill="currentColor">Liab/Assets ratio</text>
+<line x1="60" y1="348.0" x2="554" y2="348.0" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="351.0" text-anchor="end" font-size="9" fill="#999">$0.0B</text>
+<line x1="60" y1="297.2" x2="554" y2="297.2" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="300.2" text-anchor="end" font-size="9" fill="#999">$50.0B</text>
+<line x1="60" y1="246.4" x2="554" y2="246.4" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="249.4" text-anchor="end" font-size="9" fill="#999">$100.0B</text>
+<line x1="60" y1="195.6" x2="554" y2="195.6" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="198.6" text-anchor="end" font-size="9" fill="#999">$150.0B</text>
+<line x1="60" y1="144.8" x2="554" y2="144.8" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="147.8" text-anchor="end" font-size="9" fill="#999">$200.0B</text>
+<line x1="60" y1="94.0" x2="554" y2="94.0" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="97.0" text-anchor="end" font-size="9" fill="#999">$250.0B</text>
+<line x1="60" y1="348.0" x2="554" y2="348.0" stroke="#888" stroke-width="1"/>
+<line x1="554" y1="348.0" x2="558" y2="348.0" stroke="#9467bd" stroke-width="0.8"/>
+<text x="560.0" y="351.0" text-anchor="start" font-size="9" fill="#9467bd">0%</text>
+<line x1="554" y1="275.5" x2="558" y2="275.5" stroke="#9467bd" stroke-width="0.8"/>
+<text x="560.0" y="278.5" text-anchor="start" font-size="9" fill="#9467bd">25%</text>
+<line x1="554" y1="203.0" x2="558" y2="203.0" stroke="#9467bd" stroke-width="0.8"/>
+<text x="560.0" y="206.0" text-anchor="start" font-size="9" fill="#9467bd">50%</text>
+<line x1="554" y1="130.5" x2="558" y2="130.5" stroke="#9467bd" stroke-width="0.8"/>
+<text x="560.0" y="133.5" text-anchor="start" font-size="9" fill="#9467bd">75%</text>
+<line x1="554" y1="58.0" x2="558" y2="58.0" stroke="#9467bd" stroke-width="0.8"/>
+<text x="560.0" y="61.0" text-anchor="start" font-size="9" fill="#9467bd">100%</text>
+<rect class="bar" x="66.9" y="281.2" width="10.2" height="66.8" fill="#1f77b4" data-tip="Total Assets · Q4 FY24: $65.728B  ($65,728,000,000)"/>
+<rect class="bar" x="116.3" y="269.7" width="10.2" height="78.3" fill="#1f77b4" data-tip="Total Assets · Q1 FY25: $77.072B  ($77,072,000,000)"/>
+<rect class="bar" x="165.7" y="261.4" width="10.2" height="86.6" fill="#1f77b4" data-tip="Total Assets · Q2 FY25: $85.227B  ($85,227,000,000)"/>
+<rect class="bar" x="215.1" y="250.4" width="10.2" height="97.6" fill="#1f77b4" data-tip="Total Assets · Q3 FY25: $96.013B  ($96,013,000,000)"/>
+<rect class="bar" x="264.5" y="234.6" width="10.2" height="113.4" fill="#1f77b4" data-tip="Total Assets · Q4 FY25: $111.601B  ($111,601,000,000)"/>
+<rect class="bar" x="313.9" y="220.7" width="10.2" height="127.3" fill="#1f77b4" data-tip="Total Assets · Q1 FY26: $125.254B  ($125,254,000,000)"/>
+<rect class="bar" x="363.3" y="205.0" width="10.2" height="143.0" fill="#1f77b4" data-tip="Total Assets · Q2 FY26: $140.740B  ($140,740,000,000)"/>
+<rect class="bar" x="412.7" y="184.3" width="10.2" height="163.7" fill="#1f77b4" data-tip="Total Assets · Q3 FY26: $161.148B  ($161,148,000,000)"/>
+<rect class="bar" x="462.1" y="137.9" width="10.2" height="210.1" fill="#1f77b4" data-tip="Total Assets · Q4 FY26: $206.803B  ($206,803,000,000)"/>
+<rect class="bar" x="511.5" y="84.4" width="10.2" height="263.6" fill="#1f77b4" data-tip="Total Assets · Q1 FY27: $259.474B  ($259,474,000,000)"/>
+<rect class="bar" x="78.8" y="324.9" width="10.2" height="23.1" fill="#d62728" data-tip="Total Liabilities · Q4 FY24: $22.750B  ($22,750,000,000)"/>
+<rect class="bar" x="128.2" y="319.6" width="10.2" height="28.4" fill="#d62728" data-tip="Total Liabilities · Q1 FY25: $27.930B  ($27,930,000,000)"/>
+<rect class="bar" x="177.6" y="320.5" width="10.2" height="27.5" fill="#d62728" data-tip="Total Liabilities · Q2 FY25: $27.070B  ($27,070,000,000)"/>
+<rect class="bar" x="227.0" y="317.4" width="10.2" height="30.6" fill="#d62728" data-tip="Total Liabilities · Q3 FY25: $30.114B  ($30,114,000,000)"/>
+<rect class="bar" x="276.4" y="315.2" width="10.2" height="32.8" fill="#d62728" data-tip="Total Liabilities · Q4 FY25: $32.274B  ($32,274,000,000)"/>
+<rect class="bar" x="325.8" y="305.9" width="10.2" height="42.1" fill="#d62728" data-tip="Total Liabilities · Q1 FY26: $41.411B  ($41,411,000,000)"/>
+<rect class="bar" x="375.2" y="306.7" width="10.2" height="41.3" fill="#d62728" data-tip="Total Liabilities · Q2 FY26: $40.609B  ($40,609,000,000)"/>
+<rect class="bar" x="424.6" y="305.1" width="10.2" height="42.9" fill="#d62728" data-tip="Total Liabilities · Q3 FY26: $42.251B  ($42,251,000,000)"/>
+<rect class="bar" x="474.0" y="297.7" width="10.2" height="50.3" fill="#d62728" data-tip="Total Liabilities · Q4 FY26: $49.510B  ($49,510,000,000)"/>
+<rect class="bar" x="523.4" y="283.0" width="10.2" height="65.0" fill="#d62728" data-tip="Total Liabilities · Q1 FY27: $64.000B  ($64,000,000,000)"/>
+<rect class="bar" x="90.6" y="304.3" width="10.2" height="43.7" fill="#2ca02c" data-tip="Shareholder Equity · Q4 FY24: $42.978B  ($42,978,000,000)"/>
+<rect class="bar" x="140.0" y="298.1" width="10.2" height="49.9" fill="#2ca02c" data-tip="Shareholder Equity · Q1 FY25: $49.142B  ($49,142,000,000)"/>
+<rect class="bar" x="189.4" y="288.9" width="10.2" height="59.1" fill="#2ca02c" data-tip="Shareholder Equity · Q2 FY25: $58.157B  ($58,157,000,000)"/>
+<rect class="bar" x="238.8" y="281.0" width="10.2" height="67.0" fill="#2ca02c" data-tip="Shareholder Equity · Q3 FY25: $65.899B  ($65,899,000,000)"/>
+<rect class="bar" x="288.2" y="267.4" width="10.2" height="80.6" fill="#2ca02c" data-tip="Shareholder Equity · Q4 FY25: $79.327B  ($79,327,000,000)"/>
+<rect class="bar" x="337.6" y="262.8" width="10.2" height="85.2" fill="#2ca02c" data-tip="Shareholder Equity · Q1 FY26: $83.843B  ($83,843,000,000)"/>
+<rect class="bar" x="387.0" y="246.3" width="10.2" height="101.7" fill="#2ca02c" data-tip="Shareholder Equity · Q2 FY26: $100.131B  ($100,131,000,000)"/>
+<rect class="bar" x="436.4" y="227.2" width="10.2" height="120.8" fill="#2ca02c" data-tip="Shareholder Equity · Q3 FY26: $118.897B  ($118,897,000,000)"/>
+<rect class="bar" x="485.8" y="188.2" width="10.2" height="159.8" fill="#2ca02c" data-tip="Shareholder Equity · Q4 FY26: $157.293B  ($157,293,000,000)"/>
+<rect class="bar" x="535.2" y="149.4" width="10.2" height="198.6" fill="#2ca02c" data-tip="Shareholder Equity · Q1 FY27: $195.474B  ($195,474,000,000)"/>
+<path d="M 84.7 247.6 L 134.1 242.9 L 183.5 255.9 L 232.9 257.0 L 282.3 264.1 L 331.7 252.1 L 381.1 264.3 L 430.5 272.0 L 479.9 278.6 L 529.3 276.5" fill="none" stroke="#9467bd" stroke-width="2.2" stroke-dasharray="5 3" pointer-events="none"/>
+<line x1="84.7" y1="247.6" x2="134.1" y2="242.9" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Liab/Assets ratio · Q4 FY24→Q1 FY25: 34.6% → 36.2%"/>
+<line x1="134.1" y1="242.9" x2="183.5" y2="255.9" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Liab/Assets ratio · Q1 FY25→Q2 FY25: 36.2% → 31.8%"/>
+<line x1="183.5" y1="255.9" x2="232.9" y2="257.0" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Liab/Assets ratio · Q2 FY25→Q3 FY25: 31.8% → 31.4%"/>
+<line x1="232.9" y1="257.0" x2="282.3" y2="264.1" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Liab/Assets ratio · Q3 FY25→Q4 FY25: 31.4% → 28.9%"/>
+<line x1="282.3" y1="264.1" x2="331.7" y2="252.1" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Liab/Assets ratio · Q4 FY25→Q1 FY26: 28.9% → 33.1%"/>
+<line x1="331.7" y1="252.1" x2="381.1" y2="264.3" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Liab/Assets ratio · Q1 FY26→Q2 FY26: 33.1% → 28.9%"/>
+<line x1="381.1" y1="264.3" x2="430.5" y2="272.0" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Liab/Assets ratio · Q2 FY26→Q3 FY26: 28.9% → 26.2%"/>
+<line x1="430.5" y1="272.0" x2="479.9" y2="278.6" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Liab/Assets ratio · Q3 FY26→Q4 FY26: 26.2% → 23.9%"/>
+<line x1="479.9" y1="278.6" x2="529.3" y2="276.5" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Liab/Assets ratio · Q4 FY26→Q1 FY27: 23.9% → 24.7%"/>
+<circle cx="84.7" cy="247.6" r="9" fill="transparent" pointer-events="all" data-tip="Liab/Assets ratio · Q4 FY24: 34.6%"/>
+<circle cx="84.7" cy="247.6" r="2.6" fill="#9467bd" pointer-events="none"/>
+<circle cx="134.1" cy="242.9" r="9" fill="transparent" pointer-events="all" data-tip="Liab/Assets ratio · Q1 FY25: 36.2%"/>
+<circle cx="134.1" cy="242.9" r="2.6" fill="#9467bd" pointer-events="none"/>
+<circle cx="183.5" cy="255.9" r="9" fill="transparent" pointer-events="all" data-tip="Liab/Assets ratio · Q2 FY25: 31.8%"/>
+<circle cx="183.5" cy="255.9" r="2.6" fill="#9467bd" pointer-events="none"/>
+<circle cx="232.9" cy="257.0" r="9" fill="transparent" pointer-events="all" data-tip="Liab/Assets ratio · Q3 FY25: 31.4%"/>
+<circle cx="232.9" cy="257.0" r="2.6" fill="#9467bd" pointer-events="none"/>
+<circle cx="282.3" cy="264.1" r="9" fill="transparent" pointer-events="all" data-tip="Liab/Assets ratio · Q4 FY25: 28.9%"/>
+<circle cx="282.3" cy="264.1" r="2.6" fill="#9467bd" pointer-events="none"/>
+<circle cx="331.7" cy="252.1" r="9" fill="transparent" pointer-events="all" data-tip="Liab/Assets ratio · Q1 FY26: 33.1%"/>
+<circle cx="331.7" cy="252.1" r="2.6" fill="#9467bd" pointer-events="none"/>
+<circle cx="381.1" cy="264.3" r="9" fill="transparent" pointer-events="all" data-tip="Liab/Assets ratio · Q2 FY26: 28.9%"/>
+<circle cx="381.1" cy="264.3" r="2.6" fill="#9467bd" pointer-events="none"/>
+<circle cx="430.5" cy="272.0" r="9" fill="transparent" pointer-events="all" data-tip="Liab/Assets ratio · Q3 FY26: 26.2%"/>
+<circle cx="430.5" cy="272.0" r="2.6" fill="#9467bd" pointer-events="none"/>
+<circle cx="479.9" cy="278.6" r="9" fill="transparent" pointer-events="all" data-tip="Liab/Assets ratio · Q4 FY26: 23.9%"/>
+<circle cx="479.9" cy="278.6" r="2.6" fill="#9467bd" pointer-events="none"/>
+<circle cx="529.3" cy="276.5" r="9" fill="transparent" pointer-events="all" data-tip="Liab/Assets ratio · Q1 FY27: 24.7%"/>
+<circle cx="529.3" cy="276.5" r="2.6" fill="#9467bd" pointer-events="none"/>
+<text x="84.7" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 84.7 360.0)">Q4 FY24</text>
+<text x="134.1" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 134.1 360.0)">Q1 FY25</text>
+<text x="183.5" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 183.5 360.0)">Q2 FY25</text>
+<text x="232.9" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 232.9 360.0)">Q3 FY25</text>
+<text x="282.3" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 282.3 360.0)">Q4 FY25</text>
+<text x="331.7" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 331.7 360.0)">Q1 FY26</text>
+<text x="381.1" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 381.1 360.0)">Q2 FY26</text>
+<text x="430.5" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 430.5 360.0)">Q3 FY26</text>
+<text x="479.9" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 479.9 360.0)">Q4 FY26</text>
+<text x="529.3" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 529.3 360.0)">Q1 FY27</text>
+<text x="54" y="404.8" text-anchor="end" font-size="9" fill="#1f77b4">Assets</text>
+<text x="84.7" y="404.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+21%</text>
+<text x="134.1" y="404.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+17%</text>
+<text x="183.5" y="404.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+11%</text>
+<text x="232.9" y="404.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+13%</text>
+<text x="282.3" y="404.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+16%</text>
+<text x="331.7" y="404.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+12%</text>
+<text x="381.1" y="404.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+12%</text>
+<text x="430.5" y="404.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+15%</text>
+<text x="479.9" y="404.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+28%</text>
+<text x="529.3" y="404.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+25%</text>
+<text x="54" y="419.8" text-anchor="end" font-size="9" fill="#d62728">Liab</text>
+<text x="84.7" y="419.8" text-anchor="middle" font-size="8.5" fill="#d62728">+9%</text>
+<text x="134.1" y="419.8" text-anchor="middle" font-size="8.5" fill="#d62728">+23%</text>
+<text x="183.5" y="419.8" text-anchor="middle" font-size="8.5" fill="#d62728">-3%</text>
+<text x="232.9" y="419.8" text-anchor="middle" font-size="8.5" fill="#d62728">+11%</text>
+<text x="282.3" y="419.8" text-anchor="middle" font-size="8.5" fill="#d62728">+7%</text>
+<text x="331.7" y="419.8" text-anchor="middle" font-size="8.5" fill="#d62728">+28%</text>
+<text x="381.1" y="419.8" text-anchor="middle" font-size="8.5" fill="#d62728">-2%</text>
+<text x="430.5" y="419.8" text-anchor="middle" font-size="8.5" fill="#d62728">+4%</text>
+<text x="479.9" y="419.8" text-anchor="middle" font-size="8.5" fill="#d62728">+17%</text>
+<text x="529.3" y="419.8" text-anchor="middle" font-size="8.5" fill="#d62728">+29%</text>
+<text x="54" y="434.8" text-anchor="end" font-size="9" fill="#2ca02c">Equity</text>
+<text x="84.7" y="434.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+29%</text>
+<text x="134.1" y="434.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+14%</text>
+<text x="183.5" y="434.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+18%</text>
+<text x="232.9" y="434.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+13%</text>
+<text x="282.3" y="434.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+20%</text>
+<text x="331.7" y="434.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+6%</text>
+<text x="381.1" y="434.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+19%</text>
+<text x="430.5" y="434.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+19%</text>
+<text x="479.9" y="434.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+32%</text>
+<text x="529.3" y="434.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+24%</text>
+<text x="54" y="449.8" text-anchor="end" font-size="9" fill="#9467bd">L/A</text>
+<text x="84.7" y="449.8" text-anchor="middle" font-size="8.5" fill="#9467bd">35%</text>
+<text x="134.1" y="449.8" text-anchor="middle" font-size="8.5" fill="#9467bd">36%</text>
+<text x="183.5" y="449.8" text-anchor="middle" font-size="8.5" fill="#9467bd">32%</text>
+<text x="232.9" y="449.8" text-anchor="middle" font-size="8.5" fill="#9467bd">31%</text>
+<text x="282.3" y="449.8" text-anchor="middle" font-size="8.5" fill="#9467bd">29%</text>
+<text x="331.7" y="449.8" text-anchor="middle" font-size="8.5" fill="#9467bd">33%</text>
+<text x="381.1" y="449.8" text-anchor="middle" font-size="8.5" fill="#9467bd">29%</text>
+<text x="430.5" y="449.8" text-anchor="middle" font-size="8.5" fill="#9467bd">26%</text>
+<text x="479.9" y="449.8" text-anchor="middle" font-size="8.5" fill="#9467bd">24%</text>
+<text x="529.3" y="449.8" text-anchor="middle" font-size="8.5" fill="#9467bd">25%</text>
+</svg></section>
+  <section class="card"><svg viewBox="0 0 600 441" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">
+<text x="300.0" y="20" text-anchor="middle" font-size="15" font-weight="600" fill="currentColor">NVDA income statement — last 10 years</text>
+<text x="300.0" y="36" text-anchor="middle" font-size="10.5" fill="#888">table below: YoY % change per metric</text>
+<rect x="60" y="44" width="11" height="11" rx="2" fill="#1f77b4"/>
+<text x="75" y="53.5" font-size="10.5" fill="currentColor">Total Revenue</text>
+<rect x="168.0" y="44" width="11" height="11" rx="2" fill="#ff7f0e"/>
+<text x="183.0" y="53.5" font-size="10.5" fill="currentColor">Operating Income</text>
+<rect x="294.0" y="44" width="11" height="11" rx="2" fill="#2ca02c"/>
+<text x="309.0" y="53.5" font-size="10.5" fill="currentColor">Net Income</text>
+<line x1="60" y1="348.0" x2="582" y2="348.0" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="351.0" text-anchor="end" font-size="9" fill="#999">$0.0B</text>
+<line x1="60" y1="287.0" x2="582" y2="287.0" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="290.0" text-anchor="end" font-size="9" fill="#999">$50.0B</text>
+<line x1="60" y1="225.9" x2="582" y2="225.9" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="228.9" text-anchor="end" font-size="9" fill="#999">$100.0B</text>
+<line x1="60" y1="164.9" x2="582" y2="164.9" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="167.9" text-anchor="end" font-size="9" fill="#999">$150.0B</text>
+<line x1="60" y1="103.8" x2="582" y2="103.8" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="106.8" text-anchor="end" font-size="9" fill="#999">$200.0B</text>
+<line x1="60" y1="348.0" x2="582" y2="348.0" stroke="#888" stroke-width="1"/>
+<rect class="bar" x="67.3" y="339.6" width="16.2" height="8.4" fill="#1f77b4" data-tip="Total Revenue · FY17: $6.910B  ($6,910,000,000)"/>
+<rect class="bar" x="119.5" y="336.1" width="16.2" height="11.9" fill="#1f77b4" data-tip="Total Revenue · FY18: $9.714B  ($9,714,000,000)"/>
+<rect class="bar" x="171.7" y="333.7" width="16.2" height="14.3" fill="#1f77b4" data-tip="Total Revenue · FY19: $11.716B  ($11,716,000,000)"/>
+<rect class="bar" x="223.9" y="334.7" width="16.2" height="13.3" fill="#1f77b4" data-tip="Total Revenue · FY20: $10.918B  ($10,918,000,000)"/>
+<rect class="bar" x="276.1" y="327.6" width="16.2" height="20.4" fill="#1f77b4" data-tip="Total Revenue · FY21: $16.675B  ($16,675,000,000)"/>
+<rect class="bar" x="328.3" y="315.1" width="16.2" height="32.9" fill="#1f77b4" data-tip="Total Revenue · FY22: $26.914B  ($26,914,000,000)"/>
+<rect class="bar" x="380.5" y="315.1" width="16.2" height="32.9" fill="#1f77b4" data-tip="Total Revenue · FY23: $26.974B  ($26,974,000,000)"/>
+<rect class="bar" x="432.7" y="273.6" width="16.2" height="74.4" fill="#1f77b4" data-tip="Total Revenue · FY24: $60.922B  ($60,922,000,000)"/>
+<rect class="bar" x="484.9" y="188.7" width="16.2" height="159.3" fill="#1f77b4" data-tip="Total Revenue · FY25: $130.497B  ($130,497,000,000)"/>
+<rect class="bar" x="537.1" y="84.4" width="16.2" height="263.6" fill="#1f77b4" data-tip="Total Revenue · FY26: $215.938B  ($215,938,000,000)"/>
+<rect class="bar" x="86.1" y="345.6" width="16.2" height="2.4" fill="#ff7f0e" data-tip="Operating Income · FY17: $1.934B  ($1,934,000,000)"/>
+<rect class="bar" x="138.3" y="344.1" width="16.2" height="3.9" fill="#ff7f0e" data-tip="Operating Income · FY18: $3.210B  ($3,210,000,000)"/>
+<rect class="bar" x="190.5" y="343.4" width="16.2" height="4.6" fill="#ff7f0e" data-tip="Operating Income · FY19: $3.804B  ($3,804,000,000)"/>
+<rect class="bar" x="242.7" y="344.5" width="16.2" height="3.5" fill="#ff7f0e" data-tip="Operating Income · FY20: $2.846B  ($2,846,000,000)"/>
+<rect class="bar" x="294.9" y="342.5" width="16.2" height="5.5" fill="#ff7f0e" data-tip="Operating Income · FY21: $4.532B  ($4,532,000,000)"/>
+<rect class="bar" x="347.1" y="335.7" width="16.2" height="12.3" fill="#ff7f0e" data-tip="Operating Income · FY22: $10.041B  ($10,041,000,000)"/>
+<rect class="bar" x="399.3" y="342.8" width="16.2" height="5.2" fill="#ff7f0e" data-tip="Operating Income · FY23: $4.224B  ($4,224,000,000)"/>
+<rect class="bar" x="451.5" y="307.7" width="16.2" height="40.3" fill="#ff7f0e" data-tip="Operating Income · FY24: $32.972B  ($32,972,000,000)"/>
+<rect class="bar" x="503.7" y="248.6" width="16.2" height="99.4" fill="#ff7f0e" data-tip="Operating Income · FY25: $81.453B  ($81,453,000,000)"/>
+<rect class="bar" x="555.9" y="188.8" width="16.2" height="159.2" fill="#ff7f0e" data-tip="Operating Income · FY26: $130.387B  ($130,387,000,000)"/>
+<path d="M 86.1 346.0 L 138.3 344.3 L 190.5 342.9 L 242.7 344.6 L 294.9 342.7 L 347.1 336.1 L 399.3 342.7 L 451.5 311.7 L 503.7 259.0 L 555.9 201.4" fill="none" stroke="#2ca02c" stroke-width="2.2" pointer-events="none"/>
+<line x1="86.1" y1="346.0" x2="138.3" y2="344.3" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Net Income · FY17→FY18: $1.666B → $3.047B"/>
+<line x1="138.3" y1="344.3" x2="190.5" y2="342.9" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Net Income · FY18→FY19: $3.047B → $4.141B"/>
+<line x1="190.5" y1="342.9" x2="242.7" y2="344.6" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Net Income · FY19→FY20: $4.141B → $2.796B"/>
+<line x1="242.7" y1="344.6" x2="294.9" y2="342.7" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Net Income · FY20→FY21: $2.796B → $4.332B"/>
+<line x1="294.9" y1="342.7" x2="347.1" y2="336.1" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Net Income · FY21→FY22: $4.332B → $9.752B"/>
+<line x1="347.1" y1="336.1" x2="399.3" y2="342.7" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Net Income · FY22→FY23: $9.752B → $4.368B"/>
+<line x1="399.3" y1="342.7" x2="451.5" y2="311.7" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Net Income · FY23→FY24: $4.368B → $29.760B"/>
+<line x1="451.5" y1="311.7" x2="503.7" y2="259.0" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Net Income · FY24→FY25: $29.760B → $72.880B"/>
+<line x1="503.7" y1="259.0" x2="555.9" y2="201.4" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Net Income · FY25→FY26: $72.880B → $120.067B"/>
+<circle cx="86.1" cy="346.0" r="9" fill="transparent" pointer-events="all" data-tip="Net Income · FY17: $1.666B  ($1,666,000,000)"/>
+<circle cx="86.1" cy="346.0" r="2.6" fill="#2ca02c" pointer-events="none"/>
+<circle cx="138.3" cy="344.3" r="9" fill="transparent" pointer-events="all" data-tip="Net Income · FY18: $3.047B  ($3,047,000,000)"/>
+<circle cx="138.3" cy="344.3" r="2.6" fill="#2ca02c" pointer-events="none"/>
+<circle cx="190.5" cy="342.9" r="9" fill="transparent" pointer-events="all" data-tip="Net Income · FY19: $4.141B  ($4,141,000,000)"/>
+<circle cx="190.5" cy="342.9" r="2.6" fill="#2ca02c" pointer-events="none"/>
+<circle cx="242.7" cy="344.6" r="9" fill="transparent" pointer-events="all" data-tip="Net Income · FY20: $2.796B  ($2,796,000,000)"/>
+<circle cx="242.7" cy="344.6" r="2.6" fill="#2ca02c" pointer-events="none"/>
+<circle cx="294.9" cy="342.7" r="9" fill="transparent" pointer-events="all" data-tip="Net Income · FY21: $4.332B  ($4,332,000,000)"/>
+<circle cx="294.9" cy="342.7" r="2.6" fill="#2ca02c" pointer-events="none"/>
+<circle cx="347.1" cy="336.1" r="9" fill="transparent" pointer-events="all" data-tip="Net Income · FY22: $9.752B  ($9,752,000,000)"/>
+<circle cx="347.1" cy="336.1" r="2.6" fill="#2ca02c" pointer-events="none"/>
+<circle cx="399.3" cy="342.7" r="9" fill="transparent" pointer-events="all" data-tip="Net Income · FY23: $4.368B  ($4,368,000,000)"/>
+<circle cx="399.3" cy="342.7" r="2.6" fill="#2ca02c" pointer-events="none"/>
+<circle cx="451.5" cy="311.7" r="9" fill="transparent" pointer-events="all" data-tip="Net Income · FY24: $29.760B  ($29,760,000,000)"/>
+<circle cx="451.5" cy="311.7" r="2.6" fill="#2ca02c" pointer-events="none"/>
+<circle cx="503.7" cy="259.0" r="9" fill="transparent" pointer-events="all" data-tip="Net Income · FY25: $72.880B  ($72,880,000,000)"/>
+<circle cx="503.7" cy="259.0" r="2.6" fill="#2ca02c" pointer-events="none"/>
+<circle cx="555.9" cy="201.4" r="9" fill="transparent" pointer-events="all" data-tip="Net Income · FY26: $120.067B  ($120,067,000,000)"/>
+<circle cx="555.9" cy="201.4" r="2.6" fill="#2ca02c" pointer-events="none"/>
+<text x="86.1" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY17</text>
+<text x="138.3" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY18</text>
+<text x="190.5" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY19</text>
+<text x="242.7" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY20</text>
+<text x="294.9" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY21</text>
+<text x="347.1" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY22</text>
+<text x="399.3" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY23</text>
+<text x="451.5" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY24</text>
+<text x="503.7" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY25</text>
+<text x="555.9" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY26</text>
+<text x="54" y="392.8" text-anchor="end" font-size="9" fill="#1f77b4">Revenue</text>
+<text x="86.1" y="392.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+38%</text>
+<text x="138.3" y="392.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+41%</text>
+<text x="190.5" y="392.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+21%</text>
+<text x="242.7" y="392.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">-7%</text>
+<text x="294.9" y="392.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+53%</text>
+<text x="347.1" y="392.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+61%</text>
+<text x="399.3" y="392.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+0%</text>
+<text x="451.5" y="392.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+126%</text>
+<text x="503.7" y="392.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+114%</text>
+<text x="555.9" y="392.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+65%</text>
+<text x="54" y="407.8" text-anchor="end" font-size="9" fill="#ff7f0e">Op Inc</text>
+<text x="86.1" y="407.8" text-anchor="middle" font-size="8.5" fill="#777">n/m</text>
+<text x="138.3" y="407.8" text-anchor="middle" font-size="8.5" fill="#777">n/m</text>
+<text x="190.5" y="407.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+19%</text>
+<text x="242.7" y="407.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">-25%</text>
+<text x="294.9" y="407.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+59%</text>
+<text x="347.1" y="407.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+122%</text>
+<text x="399.3" y="407.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">-58%</text>
+<text x="451.5" y="407.8" text-anchor="middle" font-size="8.5" fill="#777">n/m</text>
+<text x="503.7" y="407.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+147%</text>
+<text x="555.9" y="407.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+60%</text>
+<text x="54" y="422.8" text-anchor="end" font-size="9" fill="#2ca02c">Net Inc</text>
+<text x="86.1" y="422.8" text-anchor="middle" font-size="8.5" fill="#777">n/m</text>
+<text x="138.3" y="422.8" text-anchor="middle" font-size="8.5" fill="#777">n/m</text>
+<text x="190.5" y="422.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+36%</text>
+<text x="242.7" y="422.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">-32%</text>
+<text x="294.9" y="422.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+55%</text>
+<text x="347.1" y="422.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+125%</text>
+<text x="399.3" y="422.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">-55%</text>
+<text x="451.5" y="422.8" text-anchor="middle" font-size="8.5" fill="#777">n/m</text>
+<text x="503.7" y="422.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+145%</text>
+<text x="555.9" y="422.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+65%</text>
+</svg></section>
+  <section class="card"><svg viewBox="0 0 600 453" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">
+<text x="300.0" y="20" text-anchor="middle" font-size="15" font-weight="600" fill="currentColor">NVDA income statement — last 10 quarters</text>
+<text x="300.0" y="36" text-anchor="middle" font-size="10.5" fill="#888">table below: QoQ % change per metric</text>
+<rect x="60" y="44" width="11" height="11" rx="2" fill="#1f77b4"/>
+<text x="75" y="53.5" font-size="10.5" fill="currentColor">Total Revenue</text>
+<rect x="168.0" y="44" width="11" height="11" rx="2" fill="#ff7f0e"/>
+<text x="183.0" y="53.5" font-size="10.5" fill="currentColor">Operating Income</text>
+<rect x="294.0" y="44" width="11" height="11" rx="2" fill="#2ca02c"/>
+<text x="309.0" y="53.5" font-size="10.5" fill="currentColor">Net Income</text>
+<line x1="60" y1="348.0" x2="582" y2="348.0" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="351.0" text-anchor="end" font-size="9" fill="#999">$0.0B</text>
+<line x1="60" y1="283.4" x2="582" y2="283.4" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="286.4" text-anchor="end" font-size="9" fill="#999">$20.0B</text>
+<line x1="60" y1="218.8" x2="582" y2="218.8" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="221.8" text-anchor="end" font-size="9" fill="#999">$40.0B</text>
+<line x1="60" y1="154.2" x2="582" y2="154.2" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="157.2" text-anchor="end" font-size="9" fill="#999">$60.0B</text>
+<line x1="60" y1="89.6" x2="582" y2="89.6" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="92.6" text-anchor="end" font-size="9" fill="#999">$80.0B</text>
+<line x1="60" y1="348.0" x2="582" y2="348.0" stroke="#888" stroke-width="1"/>
+<rect class="bar" x="67.3" y="276.6" width="16.2" height="71.4" fill="#1f77b4" data-tip="Total Revenue · Q4 FY24: $22.103B  ($22,103,000,000)"/>
+<rect class="bar" x="119.5" y="263.9" width="16.2" height="84.1" fill="#1f77b4" data-tip="Total Revenue · Q1 FY25: $26.044B  ($26,044,000,000)"/>
+<rect class="bar" x="171.7" y="251.0" width="16.2" height="97.0" fill="#1f77b4" data-tip="Total Revenue · Q2 FY25: $30.040B  ($30,040,000,000)"/>
+<rect class="bar" x="223.9" y="234.7" width="16.2" height="113.3" fill="#1f77b4" data-tip="Total Revenue · Q3 FY25: $35.082B  ($35,082,000,000)"/>
+<rect class="bar" x="276.1" y="221.0" width="16.2" height="127.0" fill="#1f77b4" data-tip="Total Revenue · Q4 FY25: $39.331B  ($39,331,000,000)"/>
+<rect class="bar" x="328.3" y="205.7" width="16.2" height="142.3" fill="#1f77b4" data-tip="Total Revenue · Q1 FY26: $44.062B  ($44,062,000,000)"/>
+<rect class="bar" x="380.5" y="197.0" width="16.2" height="151.0" fill="#1f77b4" data-tip="Total Revenue · Q2 FY26: $46.743B  ($46,743,000,000)"/>
+<rect class="bar" x="432.7" y="163.9" width="16.2" height="184.1" fill="#1f77b4" data-tip="Total Revenue · Q3 FY26: $57.006B  ($57,006,000,000)"/>
+<rect class="bar" x="484.9" y="127.9" width="16.2" height="220.1" fill="#1f77b4" data-tip="Total Revenue · Q4 FY26: $68.127B  ($68,127,000,000)"/>
+<rect class="bar" x="537.1" y="84.4" width="16.2" height="263.6" fill="#1f77b4" data-tip="Total Revenue · Q1 FY27: $81.615B  ($81,615,000,000)"/>
+<rect class="bar" x="86.1" y="304.0" width="16.2" height="44.0" fill="#ff7f0e" data-tip="Operating Income · Q4 FY24: $13.614B  ($13,614,000,000)"/>
+<rect class="bar" x="138.3" y="293.4" width="16.2" height="54.6" fill="#ff7f0e" data-tip="Operating Income · Q1 FY25: $16.909B  ($16,909,000,000)"/>
+<rect class="bar" x="190.5" y="287.8" width="16.2" height="60.2" fill="#ff7f0e" data-tip="Operating Income · Q2 FY25: $18.642B  ($18,642,000,000)"/>
+<rect class="bar" x="242.7" y="277.4" width="16.2" height="70.6" fill="#ff7f0e" data-tip="Operating Income · Q3 FY25: $21.869B  ($21,869,000,000)"/>
+<rect class="bar" x="294.9" y="270.4" width="16.2" height="77.6" fill="#ff7f0e" data-tip="Operating Income · Q4 FY25: $24.034B  ($24,034,000,000)"/>
+<rect class="bar" x="347.1" y="278.1" width="16.2" height="69.9" fill="#ff7f0e" data-tip="Operating Income · Q1 FY26: $21.638B  ($21,638,000,000)"/>
+<rect class="bar" x="399.3" y="256.1" width="16.2" height="91.9" fill="#ff7f0e" data-tip="Operating Income · Q2 FY26: $28.440B  ($28,440,000,000)"/>
+<rect class="bar" x="451.5" y="231.7" width="16.2" height="116.3" fill="#ff7f0e" data-tip="Operating Income · Q3 FY26: $36.010B  ($36,010,000,000)"/>
+<rect class="bar" x="503.7" y="204.9" width="16.2" height="143.1" fill="#ff7f0e" data-tip="Operating Income · Q4 FY26: $44.299B  ($44,299,000,000)"/>
+<rect class="bar" x="555.9" y="175.1" width="16.2" height="172.9" fill="#ff7f0e" data-tip="Operating Income · Q1 FY27: $53.536B  ($53,536,000,000)"/>
+<path d="M 86.1 308.3 L 138.3 299.9 L 190.5 294.4 L 242.7 285.6 L 294.9 276.6 L 347.1 287.4 L 399.3 262.7 L 451.5 244.9 L 503.7 209.2 L 555.9 159.6" fill="none" stroke="#2ca02c" stroke-width="2.2" pointer-events="none"/>
+<line x1="86.1" y1="308.3" x2="138.3" y2="299.9" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Net Income · Q4 FY24→Q1 FY25: $12.285B → $14.881B"/>
+<line x1="138.3" y1="299.9" x2="190.5" y2="294.4" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Net Income · Q1 FY25→Q2 FY25: $14.881B → $16.599B"/>
+<line x1="190.5" y1="294.4" x2="242.7" y2="285.6" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Net Income · Q2 FY25→Q3 FY25: $16.599B → $19.309B"/>
+<line x1="242.7" y1="285.6" x2="294.9" y2="276.6" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Net Income · Q3 FY25→Q4 FY25: $19.309B → $22.091B"/>
+<line x1="294.9" y1="276.6" x2="347.1" y2="287.4" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Net Income · Q4 FY25→Q1 FY26: $22.091B → $18.775B"/>
+<line x1="347.1" y1="287.4" x2="399.3" y2="262.7" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Net Income · Q1 FY26→Q2 FY26: $18.775B → $26.422B"/>
+<line x1="399.3" y1="262.7" x2="451.5" y2="244.9" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Net Income · Q2 FY26→Q3 FY26: $26.422B → $31.910B"/>
+<line x1="451.5" y1="244.9" x2="503.7" y2="209.2" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Net Income · Q3 FY26→Q4 FY26: $31.910B → $42.960B"/>
+<line x1="503.7" y1="209.2" x2="555.9" y2="159.6" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Net Income · Q4 FY26→Q1 FY27: $42.960B → $58.321B"/>
+<circle cx="86.1" cy="308.3" r="9" fill="transparent" pointer-events="all" data-tip="Net Income · Q4 FY24: $12.285B  ($12,285,000,000)"/>
+<circle cx="86.1" cy="308.3" r="2.6" fill="#2ca02c" pointer-events="none"/>
+<circle cx="138.3" cy="299.9" r="9" fill="transparent" pointer-events="all" data-tip="Net Income · Q1 FY25: $14.881B  ($14,881,000,000)"/>
+<circle cx="138.3" cy="299.9" r="2.6" fill="#2ca02c" pointer-events="none"/>
+<circle cx="190.5" cy="294.4" r="9" fill="transparent" pointer-events="all" data-tip="Net Income · Q2 FY25: $16.599B  ($16,599,000,000)"/>
+<circle cx="190.5" cy="294.4" r="2.6" fill="#2ca02c" pointer-events="none"/>
+<circle cx="242.7" cy="285.6" r="9" fill="transparent" pointer-events="all" data-tip="Net Income · Q3 FY25: $19.309B  ($19,309,000,000)"/>
+<circle cx="242.7" cy="285.6" r="2.6" fill="#2ca02c" pointer-events="none"/>
+<circle cx="294.9" cy="276.6" r="9" fill="transparent" pointer-events="all" data-tip="Net Income · Q4 FY25: $22.091B  ($22,091,000,000)"/>
+<circle cx="294.9" cy="276.6" r="2.6" fill="#2ca02c" pointer-events="none"/>
+<circle cx="347.1" cy="287.4" r="9" fill="transparent" pointer-events="all" data-tip="Net Income · Q1 FY26: $18.775B  ($18,775,000,000)"/>
+<circle cx="347.1" cy="287.4" r="2.6" fill="#2ca02c" pointer-events="none"/>
+<circle cx="399.3" cy="262.7" r="9" fill="transparent" pointer-events="all" data-tip="Net Income · Q2 FY26: $26.422B  ($26,422,000,000)"/>
+<circle cx="399.3" cy="262.7" r="2.6" fill="#2ca02c" pointer-events="none"/>
+<circle cx="451.5" cy="244.9" r="9" fill="transparent" pointer-events="all" data-tip="Net Income · Q3 FY26: $31.910B  ($31,910,000,000)"/>
+<circle cx="451.5" cy="244.9" r="2.6" fill="#2ca02c" pointer-events="none"/>
+<circle cx="503.7" cy="209.2" r="9" fill="transparent" pointer-events="all" data-tip="Net Income · Q4 FY26: $42.960B  ($42,960,000,000)"/>
+<circle cx="503.7" cy="209.2" r="2.6" fill="#2ca02c" pointer-events="none"/>
+<circle cx="555.9" cy="159.6" r="9" fill="transparent" pointer-events="all" data-tip="Net Income · Q1 FY27: $58.321B  ($58,321,000,000)"/>
+<circle cx="555.9" cy="159.6" r="2.6" fill="#2ca02c" pointer-events="none"/>
+<text x="86.1" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 86.1 360.0)">Q4 FY24</text>
+<text x="138.3" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 138.3 360.0)">Q1 FY25</text>
+<text x="190.5" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 190.5 360.0)">Q2 FY25</text>
+<text x="242.7" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 242.7 360.0)">Q3 FY25</text>
+<text x="294.9" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 294.9 360.0)">Q4 FY25</text>
+<text x="347.1" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 347.1 360.0)">Q1 FY26</text>
+<text x="399.3" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 399.3 360.0)">Q2 FY26</text>
+<text x="451.5" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 451.5 360.0)">Q3 FY26</text>
+<text x="503.7" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 503.7 360.0)">Q4 FY26</text>
+<text x="555.9" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 555.9 360.0)">Q1 FY27</text>
+<text x="54" y="404.8" text-anchor="end" font-size="9" fill="#1f77b4">Revenue</text>
+<text x="86.1" y="404.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+22%</text>
+<text x="138.3" y="404.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+18%</text>
+<text x="190.5" y="404.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+15%</text>
+<text x="242.7" y="404.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+17%</text>
+<text x="294.9" y="404.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+12%</text>
+<text x="347.1" y="404.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+12%</text>
+<text x="399.3" y="404.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+6%</text>
+<text x="451.5" y="404.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+22%</text>
+<text x="503.7" y="404.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+20%</text>
+<text x="555.9" y="404.8" text-anchor="middle" font-size="8.5" fill="#1f77b4">+20%</text>
+<text x="54" y="419.8" text-anchor="end" font-size="9" fill="#ff7f0e">Op Inc</text>
+<text x="86.1" y="419.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+31%</text>
+<text x="138.3" y="419.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+24%</text>
+<text x="190.5" y="419.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+10%</text>
+<text x="242.7" y="419.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+17%</text>
+<text x="294.9" y="419.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+10%</text>
+<text x="347.1" y="419.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">-10%</text>
+<text x="399.3" y="419.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+31%</text>
+<text x="451.5" y="419.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+27%</text>
+<text x="503.7" y="419.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+23%</text>
+<text x="555.9" y="419.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+21%</text>
+<text x="54" y="434.8" text-anchor="end" font-size="9" fill="#2ca02c">Net Inc</text>
+<text x="86.1" y="434.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+33%</text>
+<text x="138.3" y="434.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+21%</text>
+<text x="190.5" y="434.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+12%</text>
+<text x="242.7" y="434.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+16%</text>
+<text x="294.9" y="434.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+14%</text>
+<text x="347.1" y="434.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">-15%</text>
+<text x="399.3" y="434.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+41%</text>
+<text x="451.5" y="434.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+21%</text>
+<text x="503.7" y="434.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+35%</text>
+<text x="555.9" y="434.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+36%</text>
+</svg></section>
+  <section class="card"><svg viewBox="0 0 600 456" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">
+<text x="300.0" y="20" text-anchor="middle" font-size="15" font-weight="600" fill="currentColor">NVDA cash flow — last 10 years</text>
+<text x="300.0" y="36" text-anchor="middle" font-size="10.5" fill="#888">table below: YoY % change per metric (n/m = base near zero)</text>
+<rect x="60" y="44" width="11" height="11" rx="2" fill="#2ca02c"/>
+<text x="75" y="53.5" font-size="10.5" fill="currentColor">Operating CF</text>
+<rect x="162.0" y="44" width="11" height="11" rx="2" fill="#d62728"/>
+<text x="177.0" y="53.5" font-size="10.5" fill="currentColor">Investing CF</text>
+<rect x="264.0" y="44" width="11" height="11" rx="2" fill="#9467bd"/>
+<text x="279.0" y="53.5" font-size="10.5" fill="currentColor">Financing CF</text>
+<rect x="366.0" y="44" width="11" height="11" rx="2" fill="#ff7f0e"/>
+<text x="381.0" y="53.5" font-size="10.5" fill="currentColor">Free Cash Flow</text>
+<line x1="60" y1="329.4" x2="582" y2="329.4" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="332.4" text-anchor="end" font-size="9" fill="#999">$-50.0B</text>
+<line x1="60" y1="248.7" x2="582" y2="248.7" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="251.7" text-anchor="end" font-size="9" fill="#999">$0.0B</text>
+<line x1="60" y1="168.1" x2="582" y2="168.1" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="171.1" text-anchor="end" font-size="9" fill="#999">$50.0B</text>
+<line x1="60" y1="87.4" x2="582" y2="87.4" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="90.4" text-anchor="end" font-size="9" fill="#999">$100.0B</text>
+<line x1="60" y1="248.7" x2="582" y2="248.7" stroke="#888" stroke-width="1"/>
+<rect class="bar" x="67.3" y="246.0" width="10.8" height="2.7" fill="#2ca02c" data-tip="Operating CF · FY17: $1.672B  ($1,672,000,000)"/>
+<rect class="bar" x="119.5" y="243.1" width="10.8" height="5.7" fill="#2ca02c" data-tip="Operating CF · FY18: $3.502B  ($3,502,000,000)"/>
+<rect class="bar" x="171.7" y="242.7" width="10.8" height="6.0" fill="#2ca02c" data-tip="Operating CF · FY19: $3.743B  ($3,743,000,000)"/>
+<rect class="bar" x="223.9" y="241.1" width="10.8" height="7.7" fill="#2ca02c" data-tip="Operating CF · FY20: $4.761B  ($4,761,000,000)"/>
+<rect class="bar" x="276.1" y="239.3" width="10.8" height="9.4" fill="#2ca02c" data-tip="Operating CF · FY21: $5.822B  ($5,822,000,000)"/>
+<rect class="bar" x="328.3" y="234.0" width="10.8" height="14.7" fill="#2ca02c" data-tip="Operating CF · FY22: $9.108B  ($9,108,000,000)"/>
+<rect class="bar" x="380.5" y="239.6" width="10.8" height="9.1" fill="#2ca02c" data-tip="Operating CF · FY23: $5.641B  ($5,641,000,000)"/>
+<rect class="bar" x="432.7" y="203.4" width="10.8" height="45.3" fill="#2ca02c" data-tip="Operating CF · FY24: $28.090B  ($28,090,000,000)"/>
+<rect class="bar" x="484.9" y="145.3" width="10.8" height="103.4" fill="#2ca02c" data-tip="Operating CF · FY25: $64.089B  ($64,089,000,000)"/>
+<rect class="bar" x="537.1" y="83.0" width="10.8" height="165.7" fill="#2ca02c" data-tip="Operating CF · FY26: $102.718B  ($102,718,000,000)"/>
+<rect class="bar" x="79.8" y="248.7" width="10.8" height="1.3" fill="#d62728" data-tip="Investing CF · FY17: $-0.793B  ($-793,000,000)"/>
+<rect class="bar" x="132.0" y="246.7" width="10.8" height="2.1" fill="#d62728" data-tip="Investing CF · FY18: $1.278B  ($1,278,000,000)"/>
+<rect class="bar" x="184.2" y="248.7" width="10.8" height="6.6" fill="#d62728" data-tip="Investing CF · FY19: $-4.097B  ($-4,097,000,000)"/>
+<rect class="bar" x="236.4" y="238.8" width="10.8" height="9.9" fill="#d62728" data-tip="Investing CF · FY20: $6.145B  ($6,145,000,000)"/>
+<rect class="bar" x="288.6" y="248.7" width="10.8" height="31.7" fill="#d62728" data-tip="Investing CF · FY21: $-19.675B  ($-19,675,000,000)"/>
+<rect class="bar" x="340.8" y="248.7" width="10.8" height="15.9" fill="#d62728" data-tip="Investing CF · FY22: $-9.830B  ($-9,830,000,000)"/>
+<rect class="bar" x="393.0" y="236.8" width="10.8" height="11.9" fill="#d62728" data-tip="Investing CF · FY23: $7.375B  ($7,375,000,000)"/>
+<rect class="bar" x="445.2" y="248.7" width="10.8" height="17.0" fill="#d62728" data-tip="Investing CF · FY24: $-10.566B  ($-10,566,000,000)"/>
+<rect class="bar" x="497.4" y="248.7" width="10.8" height="32.9" fill="#d62728" data-tip="Investing CF · FY25: $-20.421B  ($-20,421,000,000)"/>
+<rect class="bar" x="549.6" y="248.7" width="10.8" height="84.3" fill="#d62728" data-tip="Investing CF · FY26: $-52.228B  ($-52,228,000,000)"/>
+<rect class="bar" x="92.4" y="248.3" width="10.8" height="0.5" fill="#9467bd" data-tip="Financing CF · FY17: $0.291B  ($291,000,000)"/>
+<rect class="bar" x="144.6" y="248.7" width="10.8" height="4.1" fill="#9467bd" data-tip="Financing CF · FY18: $-2.544B  ($-2,544,000,000)"/>
+<rect class="bar" x="196.8" y="248.7" width="10.8" height="4.6" fill="#9467bd" data-tip="Financing CF · FY19: $-2.866B  ($-2,866,000,000)"/>
+<rect class="bar" x="249.0" y="248.7" width="10.8" height="1.3" fill="#9467bd" data-tip="Financing CF · FY20: $-0.792B  ($-792,000,000)"/>
+<rect class="bar" x="301.2" y="242.6" width="10.8" height="6.1" fill="#9467bd" data-tip="Financing CF · FY21: $3.804B  ($3,804,000,000)"/>
+<rect class="bar" x="353.4" y="245.7" width="10.8" height="3.0" fill="#9467bd" data-tip="Financing CF · FY22: $1.865B  ($1,865,000,000)"/>
+<rect class="bar" x="405.6" y="248.7" width="10.8" height="18.7" fill="#9467bd" data-tip="Financing CF · FY23: $-11.617B  ($-11,617,000,000)"/>
+<rect class="bar" x="457.8" y="248.7" width="10.8" height="22.0" fill="#9467bd" data-tip="Financing CF · FY24: $-13.633B  ($-13,633,000,000)"/>
+<rect class="bar" x="510.0" y="248.7" width="10.8" height="68.3" fill="#9467bd" data-tip="Financing CF · FY25: $-42.359B  ($-42,359,000,000)"/>
+<rect class="bar" x="562.2" y="248.7" width="10.8" height="78.2" fill="#9467bd" data-tip="Financing CF · FY26: $-48.474B  ($-48,474,000,000)"/>
+<path d="M 86.1 246.3 L 138.3 244.0 L 190.5 243.7 L 242.7 241.8 L 294.9 241.2 L 347.1 235.6 L 399.3 242.6 L 451.5 205.1 L 503.7 150.5 L 555.9 92.7" fill="none" stroke="#ff7f0e" stroke-width="2.2" pointer-events="none"/>
+<line x1="86.1" y1="246.3" x2="138.3" y2="244.0" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Free Cash Flow · FY17→FY18: $1.496B → $2.909B"/>
+<line x1="138.3" y1="244.0" x2="190.5" y2="243.7" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Free Cash Flow · FY18→FY19: $2.909B → $3.143B"/>
+<line x1="190.5" y1="243.7" x2="242.7" y2="241.8" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Free Cash Flow · FY19→FY20: $3.143B → $4.272B"/>
+<line x1="242.7" y1="241.8" x2="294.9" y2="241.2" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Free Cash Flow · FY20→FY21: $4.272B → $4.694B"/>
+<line x1="294.9" y1="241.2" x2="347.1" y2="235.6" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Free Cash Flow · FY21→FY22: $4.694B → $8.132B"/>
+<line x1="347.1" y1="235.6" x2="399.3" y2="242.6" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Free Cash Flow · FY22→FY23: $8.132B → $3.808B"/>
+<line x1="399.3" y1="242.6" x2="451.5" y2="205.1" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Free Cash Flow · FY23→FY24: $3.808B → $27.021B"/>
+<line x1="451.5" y1="205.1" x2="503.7" y2="150.5" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Free Cash Flow · FY24→FY25: $27.021B → $60.853B"/>
+<line x1="503.7" y1="150.5" x2="555.9" y2="92.7" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Free Cash Flow · FY25→FY26: $60.853B → $96.676B"/>
+<circle cx="86.1" cy="246.3" r="9" fill="transparent" pointer-events="all" data-tip="Free Cash Flow · FY17: $1.496B  ($1,496,000,000)"/>
+<circle cx="86.1" cy="246.3" r="2.6" fill="#ff7f0e" pointer-events="none"/>
+<circle cx="138.3" cy="244.0" r="9" fill="transparent" pointer-events="all" data-tip="Free Cash Flow · FY18: $2.909B  ($2,909,000,000)"/>
+<circle cx="138.3" cy="244.0" r="2.6" fill="#ff7f0e" pointer-events="none"/>
+<circle cx="190.5" cy="243.7" r="9" fill="transparent" pointer-events="all" data-tip="Free Cash Flow · FY19: $3.143B  ($3,143,000,000)"/>
+<circle cx="190.5" cy="243.7" r="2.6" fill="#ff7f0e" pointer-events="none"/>
+<circle cx="242.7" cy="241.8" r="9" fill="transparent" pointer-events="all" data-tip="Free Cash Flow · FY20: $4.272B  ($4,272,000,000)"/>
+<circle cx="242.7" cy="241.8" r="2.6" fill="#ff7f0e" pointer-events="none"/>
+<circle cx="294.9" cy="241.2" r="9" fill="transparent" pointer-events="all" data-tip="Free Cash Flow · FY21: $4.694B  ($4,694,000,000)"/>
+<circle cx="294.9" cy="241.2" r="2.6" fill="#ff7f0e" pointer-events="none"/>
+<circle cx="347.1" cy="235.6" r="9" fill="transparent" pointer-events="all" data-tip="Free Cash Flow · FY22: $8.132B  ($8,132,000,000)"/>
+<circle cx="347.1" cy="235.6" r="2.6" fill="#ff7f0e" pointer-events="none"/>
+<circle cx="399.3" cy="242.6" r="9" fill="transparent" pointer-events="all" data-tip="Free Cash Flow · FY23: $3.808B  ($3,808,000,000)"/>
+<circle cx="399.3" cy="242.6" r="2.6" fill="#ff7f0e" pointer-events="none"/>
+<circle cx="451.5" cy="205.1" r="9" fill="transparent" pointer-events="all" data-tip="Free Cash Flow · FY24: $27.021B  ($27,021,000,000)"/>
+<circle cx="451.5" cy="205.1" r="2.6" fill="#ff7f0e" pointer-events="none"/>
+<circle cx="503.7" cy="150.5" r="9" fill="transparent" pointer-events="all" data-tip="Free Cash Flow · FY25: $60.853B  ($60,853,000,000)"/>
+<circle cx="503.7" cy="150.5" r="2.6" fill="#ff7f0e" pointer-events="none"/>
+<circle cx="555.9" cy="92.7" r="9" fill="transparent" pointer-events="all" data-tip="Free Cash Flow · FY26: $96.676B  ($96,676,000,000)"/>
+<circle cx="555.9" cy="92.7" r="2.6" fill="#ff7f0e" pointer-events="none"/>
+<text x="86.1" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY17</text>
+<text x="138.3" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY18</text>
+<text x="190.5" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY19</text>
+<text x="242.7" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY20</text>
+<text x="294.9" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY21</text>
+<text x="347.1" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY22</text>
+<text x="399.3" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY23</text>
+<text x="451.5" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY24</text>
+<text x="503.7" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY25</text>
+<text x="555.9" y="363.0" text-anchor="middle" font-size="9.5" fill="#999">FY26</text>
+<text x="54" y="392.8" text-anchor="end" font-size="9" fill="#2ca02c">Op CF</text>
+<text x="86.1" y="392.8" text-anchor="middle" font-size="8.5" fill="#777">n/m</text>
+<text x="138.3" y="392.8" text-anchor="middle" font-size="8.5" fill="#777">n/m</text>
+<text x="190.5" y="392.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+7%</text>
+<text x="242.7" y="392.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+27%</text>
+<text x="294.9" y="392.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+22%</text>
+<text x="347.1" y="392.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+56%</text>
+<text x="399.3" y="392.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">-38%</text>
+<text x="451.5" y="392.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+398%</text>
+<text x="503.7" y="392.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+128%</text>
+<text x="555.9" y="392.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+60%</text>
+<text x="54" y="407.8" text-anchor="end" font-size="9" fill="#d62728">Inv CF</text>
+<text x="86.1" y="407.8" text-anchor="middle" font-size="8.5" fill="#777">n/m</text>
+<text x="138.3" y="407.8" text-anchor="middle" font-size="8.5" fill="#777">n/m</text>
+<text x="190.5" y="407.8" text-anchor="middle" font-size="8.5" fill="#d62728">-421%</text>
+<text x="242.7" y="407.8" text-anchor="middle" font-size="8.5" fill="#d62728">+250%</text>
+<text x="294.9" y="407.8" text-anchor="middle" font-size="8.5" fill="#d62728">-420%</text>
+<text x="347.1" y="407.8" text-anchor="middle" font-size="8.5" fill="#d62728">+50%</text>
+<text x="399.3" y="407.8" text-anchor="middle" font-size="8.5" fill="#d62728">+175%</text>
+<text x="451.5" y="407.8" text-anchor="middle" font-size="8.5" fill="#d62728">-243%</text>
+<text x="503.7" y="407.8" text-anchor="middle" font-size="8.5" fill="#d62728">-93%</text>
+<text x="555.9" y="407.8" text-anchor="middle" font-size="8.5" fill="#d62728">-156%</text>
+<text x="54" y="422.8" text-anchor="end" font-size="9" fill="#9467bd">Fin CF</text>
+<text x="86.1" y="422.8" text-anchor="middle" font-size="8.5" fill="#777">n/m</text>
+<text x="138.3" y="422.8" text-anchor="middle" font-size="8.5" fill="#777">n/m</text>
+<text x="190.5" y="422.8" text-anchor="middle" font-size="8.5" fill="#9467bd">-13%</text>
+<text x="242.7" y="422.8" text-anchor="middle" font-size="8.5" fill="#9467bd">+72%</text>
+<text x="294.9" y="422.8" text-anchor="middle" font-size="8.5" fill="#777">n/m</text>
+<text x="347.1" y="422.8" text-anchor="middle" font-size="8.5" fill="#9467bd">-51%</text>
+<text x="399.3" y="422.8" text-anchor="middle" font-size="8.5" fill="#777">n/m</text>
+<text x="451.5" y="422.8" text-anchor="middle" font-size="8.5" fill="#9467bd">-17%</text>
+<text x="503.7" y="422.8" text-anchor="middle" font-size="8.5" fill="#9467bd">-211%</text>
+<text x="555.9" y="422.8" text-anchor="middle" font-size="8.5" fill="#9467bd">-14%</text>
+<text x="54" y="437.8" text-anchor="end" font-size="9" fill="#ff7f0e">FCF</text>
+<text x="86.1" y="437.8" text-anchor="middle" font-size="8.5" fill="#777">n/m</text>
+<text x="138.3" y="437.8" text-anchor="middle" font-size="8.5" fill="#777">n/m</text>
+<text x="190.5" y="437.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+8%</text>
+<text x="242.7" y="437.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+36%</text>
+<text x="294.9" y="437.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+10%</text>
+<text x="347.1" y="437.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+73%</text>
+<text x="399.3" y="437.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">-53%</text>
+<text x="451.5" y="437.8" text-anchor="middle" font-size="8.5" fill="#777">n/m</text>
+<text x="503.7" y="437.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+125%</text>
+<text x="555.9" y="437.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+59%</text>
+</svg></section>
+  <section class="card"><svg viewBox="0 0 600 468" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif">
+<text x="300.0" y="20" text-anchor="middle" font-size="15" font-weight="600" fill="currentColor">NVDA cash flow — last 10 quarters</text>
+<text x="300.0" y="36" text-anchor="middle" font-size="10.5" fill="#888">table below: QoQ % change per metric (n/m = base near zero)</text>
+<rect x="60" y="44" width="11" height="11" rx="2" fill="#2ca02c"/>
+<text x="75" y="53.5" font-size="10.5" fill="currentColor">Operating CF</text>
+<rect x="162.0" y="44" width="11" height="11" rx="2" fill="#d62728"/>
+<text x="177.0" y="53.5" font-size="10.5" fill="currentColor">Investing CF</text>
+<rect x="264.0" y="44" width="11" height="11" rx="2" fill="#9467bd"/>
+<text x="279.0" y="53.5" font-size="10.5" fill="currentColor">Financing CF</text>
+<rect x="366.0" y="44" width="11" height="11" rx="2" fill="#ff7f0e"/>
+<text x="381.0" y="53.5" font-size="10.5" fill="currentColor">Free Cash Flow</text>
+<line x1="60" y1="299.6" x2="582" y2="299.6" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="302.6" text-anchor="end" font-size="9" fill="#999">$-20.0B</text>
+<line x1="60" y1="238.0" x2="582" y2="238.0" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="241.0" text-anchor="end" font-size="9" fill="#999">$0.0B</text>
+<line x1="60" y1="176.4" x2="582" y2="176.4" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="179.4" text-anchor="end" font-size="9" fill="#999">$20.0B</text>
+<line x1="60" y1="114.8" x2="582" y2="114.8" stroke="#8884" stroke-width="0.5"/>
+<text x="54" y="117.8" text-anchor="end" font-size="9" fill="#999">$40.0B</text>
+<line x1="60" y1="238.0" x2="582" y2="238.0" stroke="#888" stroke-width="1"/>
+<rect class="bar" x="67.3" y="202.6" width="10.8" height="35.4" fill="#2ca02c" data-tip="Operating CF · Q4 FY24: $11.499B  ($11,499,000,000)"/>
+<rect class="bar" x="119.5" y="190.7" width="10.8" height="47.2" fill="#2ca02c" data-tip="Operating CF · Q1 FY25: $15.345B  ($15,345,000,000)"/>
+<rect class="bar" x="171.7" y="193.4" width="10.8" height="44.6" fill="#2ca02c" data-tip="Operating CF · Q2 FY25: $14.488B  ($14,488,000,000)"/>
+<rect class="bar" x="223.9" y="183.7" width="10.8" height="54.3" fill="#2ca02c" data-tip="Operating CF · Q3 FY25: $17.627B  ($17,627,000,000)"/>
+<rect class="bar" x="276.1" y="186.8" width="10.8" height="51.2" fill="#2ca02c" data-tip="Operating CF · Q4 FY25: $16.629B  ($16,629,000,000)"/>
+<rect class="bar" x="328.3" y="153.6" width="10.8" height="84.4" fill="#2ca02c" data-tip="Operating CF · Q1 FY26: $27.414B  ($27,414,000,000)"/>
+<rect class="bar" x="380.5" y="190.7" width="10.8" height="47.3" fill="#2ca02c" data-tip="Operating CF · Q2 FY26: $15.365B  ($15,365,000,000)"/>
+<rect class="bar" x="432.7" y="164.9" width="10.8" height="73.1" fill="#2ca02c" data-tip="Operating CF · Q3 FY26: $23.751B  ($23,751,000,000)"/>
+<rect class="bar" x="484.9" y="126.6" width="10.8" height="111.4" fill="#2ca02c" data-tip="Operating CF · Q4 FY26: $36.188B  ($36,188,000,000)"/>
+<rect class="bar" x="537.1" y="83.0" width="10.8" height="155.0" fill="#2ca02c" data-tip="Operating CF · Q1 FY27: $50.344B  ($50,344,000,000)"/>
+<rect class="bar" x="79.8" y="238.0" width="10.8" height="18.8" fill="#d62728" data-tip="Investing CF · Q4 FY24: $-6.109B  ($-6,109,000,000)"/>
+<rect class="bar" x="132.0" y="238.0" width="10.8" height="17.5" fill="#d62728" data-tip="Investing CF · Q1 FY25: $-5.693B  ($-5,693,000,000)"/>
+<rect class="bar" x="184.2" y="238.0" width="10.8" height="9.8" fill="#d62728" data-tip="Investing CF · Q2 FY25: $-3.184B  ($-3,184,000,000)"/>
+<rect class="bar" x="236.4" y="238.0" width="10.8" height="13.4" fill="#d62728" data-tip="Investing CF · Q3 FY25: $-4.346B  ($-4,346,000,000)"/>
+<rect class="bar" x="288.6" y="238.0" width="10.8" height="22.2" fill="#d62728" data-tip="Investing CF · Q4 FY25: $-7.198B  ($-7,198,000,000)"/>
+<rect class="bar" x="340.8" y="238.0" width="10.8" height="16.1" fill="#d62728" data-tip="Investing CF · Q1 FY26: $-5.216B  ($-5,216,000,000)"/>
+<rect class="bar" x="393.0" y="238.0" width="10.8" height="21.9" fill="#d62728" data-tip="Investing CF · Q2 FY26: $-7.127B  ($-7,127,000,000)"/>
+<rect class="bar" x="445.2" y="238.0" width="10.8" height="27.8" fill="#d62728" data-tip="Investing CF · Q3 FY26: $-9.024B  ($-9,024,000,000)"/>
+<rect class="bar" x="497.4" y="238.0" width="10.8" height="95.0" fill="#d62728" data-tip="Investing CF · Q4 FY26: $-30.861B  ($-30,861,000,000)"/>
+<rect class="bar" x="549.6" y="238.0" width="10.8" height="81.4" fill="#d62728" data-tip="Investing CF · Q1 FY27: $-26.429B  ($-26,429,000,000)"/>
+<rect class="bar" x="92.4" y="238.0" width="10.8" height="11.2" fill="#9467bd" data-tip="Financing CF · Q4 FY24: $-3.629B  ($-3,629,000,000)"/>
+<rect class="bar" x="144.6" y="238.0" width="10.8" height="28.8" fill="#9467bd" data-tip="Financing CF · Q1 FY25: $-9.345B  ($-9,345,000,000)"/>
+<rect class="bar" x="196.8" y="238.0" width="10.8" height="31.8" fill="#9467bd" data-tip="Financing CF · Q2 FY25: $-10.320B  ($-10,320,000,000)"/>
+<rect class="bar" x="249.0" y="238.0" width="10.8" height="39.2" fill="#9467bd" data-tip="Financing CF · Q3 FY25: $-12.745B  ($-12,745,000,000)"/>
+<rect class="bar" x="301.2" y="238.0" width="10.8" height="30.6" fill="#9467bd" data-tip="Financing CF · Q4 FY25: $-9.949B  ($-9,949,000,000)"/>
+<rect class="bar" x="353.4" y="238.0" width="10.8" height="47.9" fill="#9467bd" data-tip="Financing CF · Q1 FY26: $-15.553B  ($-15,553,000,000)"/>
+<rect class="bar" x="405.6" y="238.0" width="10.8" height="36.4" fill="#9467bd" data-tip="Financing CF · Q2 FY26: $-11.833B  ($-11,833,000,000)"/>
+<rect class="bar" x="457.8" y="238.0" width="10.8" height="45.8" fill="#9467bd" data-tip="Financing CF · Q3 FY26: $-14.880B  ($-14,880,000,000)"/>
+<rect class="bar" x="510.0" y="238.0" width="10.8" height="19.1" fill="#9467bd" data-tip="Financing CF · Q4 FY26: $-6.208B  ($-6,208,000,000)"/>
+<rect class="bar" x="562.2" y="238.0" width="10.8" height="65.5" fill="#9467bd" data-tip="Financing CF · Q1 FY27: $-21.283B  ($-21,283,000,000)"/>
+<path d="M 86.1 203.4 L 138.3 191.9 L 190.5 196.4 L 242.7 186.2 L 294.9 190.1 L 347.1 157.4 L 399.3 196.5 L 451.5 169.9 L 503.7 130.5 L 555.9 88.4" fill="none" stroke="#ff7f0e" stroke-width="2.2" pointer-events="none"/>
+<line x1="86.1" y1="203.4" x2="138.3" y2="191.9" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Free Cash Flow · Q4 FY24→Q1 FY25: $11.245B → $14.976B"/>
+<line x1="138.3" y1="191.9" x2="190.5" y2="196.4" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Free Cash Flow · Q1 FY25→Q2 FY25: $14.976B → $13.511B"/>
+<line x1="190.5" y1="196.4" x2="242.7" y2="186.2" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Free Cash Flow · Q2 FY25→Q3 FY25: $13.511B → $16.814B"/>
+<line x1="242.7" y1="186.2" x2="294.9" y2="190.1" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Free Cash Flow · Q3 FY25→Q4 FY25: $16.814B → $15.552B"/>
+<line x1="294.9" y1="190.1" x2="347.1" y2="157.4" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Free Cash Flow · Q4 FY25→Q1 FY26: $15.552B → $26.187B"/>
+<line x1="347.1" y1="157.4" x2="399.3" y2="196.5" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Free Cash Flow · Q1 FY26→Q2 FY26: $26.187B → $13.470B"/>
+<line x1="399.3" y1="196.5" x2="451.5" y2="169.9" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Free Cash Flow · Q2 FY26→Q3 FY26: $13.470B → $22.115B"/>
+<line x1="451.5" y1="169.9" x2="503.7" y2="130.5" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Free Cash Flow · Q3 FY26→Q4 FY26: $22.115B → $34.904B"/>
+<line x1="503.7" y1="130.5" x2="555.9" y2="88.4" stroke="transparent" stroke-width="13" pointer-events="all" data-tip="Free Cash Flow · Q4 FY26→Q1 FY27: $34.904B → $48.587B"/>
+<circle cx="86.1" cy="203.4" r="9" fill="transparent" pointer-events="all" data-tip="Free Cash Flow · Q4 FY24: $11.245B  ($11,245,000,000)"/>
+<circle cx="86.1" cy="203.4" r="2.6" fill="#ff7f0e" pointer-events="none"/>
+<circle cx="138.3" cy="191.9" r="9" fill="transparent" pointer-events="all" data-tip="Free Cash Flow · Q1 FY25: $14.976B  ($14,976,000,000)"/>
+<circle cx="138.3" cy="191.9" r="2.6" fill="#ff7f0e" pointer-events="none"/>
+<circle cx="190.5" cy="196.4" r="9" fill="transparent" pointer-events="all" data-tip="Free Cash Flow · Q2 FY25: $13.511B  ($13,511,000,000)"/>
+<circle cx="190.5" cy="196.4" r="2.6" fill="#ff7f0e" pointer-events="none"/>
+<circle cx="242.7" cy="186.2" r="9" fill="transparent" pointer-events="all" data-tip="Free Cash Flow · Q3 FY25: $16.814B  ($16,814,000,000)"/>
+<circle cx="242.7" cy="186.2" r="2.6" fill="#ff7f0e" pointer-events="none"/>
+<circle cx="294.9" cy="190.1" r="9" fill="transparent" pointer-events="all" data-tip="Free Cash Flow · Q4 FY25: $15.552B  ($15,552,000,000)"/>
+<circle cx="294.9" cy="190.1" r="2.6" fill="#ff7f0e" pointer-events="none"/>
+<circle cx="347.1" cy="157.4" r="9" fill="transparent" pointer-events="all" data-tip="Free Cash Flow · Q1 FY26: $26.187B  ($26,187,000,000)"/>
+<circle cx="347.1" cy="157.4" r="2.6" fill="#ff7f0e" pointer-events="none"/>
+<circle cx="399.3" cy="196.5" r="9" fill="transparent" pointer-events="all" data-tip="Free Cash Flow · Q2 FY26: $13.470B  ($13,470,000,000)"/>
+<circle cx="399.3" cy="196.5" r="2.6" fill="#ff7f0e" pointer-events="none"/>
+<circle cx="451.5" cy="169.9" r="9" fill="transparent" pointer-events="all" data-tip="Free Cash Flow · Q3 FY26: $22.115B  ($22,115,000,000)"/>
+<circle cx="451.5" cy="169.9" r="2.6" fill="#ff7f0e" pointer-events="none"/>
+<circle cx="503.7" cy="130.5" r="9" fill="transparent" pointer-events="all" data-tip="Free Cash Flow · Q4 FY26: $34.904B  ($34,904,000,000)"/>
+<circle cx="503.7" cy="130.5" r="2.6" fill="#ff7f0e" pointer-events="none"/>
+<circle cx="555.9" cy="88.4" r="9" fill="transparent" pointer-events="all" data-tip="Free Cash Flow · Q1 FY27: $48.587B  ($48,587,000,000)"/>
+<circle cx="555.9" cy="88.4" r="2.6" fill="#ff7f0e" pointer-events="none"/>
+<text x="86.1" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 86.1 360.0)">Q4 FY24</text>
+<text x="138.3" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 138.3 360.0)">Q1 FY25</text>
+<text x="190.5" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 190.5 360.0)">Q2 FY25</text>
+<text x="242.7" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 242.7 360.0)">Q3 FY25</text>
+<text x="294.9" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 294.9 360.0)">Q4 FY25</text>
+<text x="347.1" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 347.1 360.0)">Q1 FY26</text>
+<text x="399.3" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 399.3 360.0)">Q2 FY26</text>
+<text x="451.5" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 451.5 360.0)">Q3 FY26</text>
+<text x="503.7" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 503.7 360.0)">Q4 FY26</text>
+<text x="555.9" y="360.0" text-anchor="end" font-size="9" fill="#999" transform="rotate(-35 555.9 360.0)">Q1 FY27</text>
+<text x="54" y="404.8" text-anchor="end" font-size="9" fill="#2ca02c">Op CF</text>
+<text x="86.1" y="404.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+57%</text>
+<text x="138.3" y="404.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+33%</text>
+<text x="190.5" y="404.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">-6%</text>
+<text x="242.7" y="404.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+22%</text>
+<text x="294.9" y="404.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">-6%</text>
+<text x="347.1" y="404.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+65%</text>
+<text x="399.3" y="404.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">-44%</text>
+<text x="451.5" y="404.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+55%</text>
+<text x="503.7" y="404.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+52%</text>
+<text x="555.9" y="404.8" text-anchor="middle" font-size="8.5" fill="#2ca02c">+39%</text>
+<text x="54" y="419.8" text-anchor="end" font-size="9" fill="#d62728">Inv CF</text>
+<text x="86.1" y="419.8" text-anchor="middle" font-size="8.5" fill="#d62728">-93%</text>
+<text x="138.3" y="419.8" text-anchor="middle" font-size="8.5" fill="#d62728">+7%</text>
+<text x="190.5" y="419.8" text-anchor="middle" font-size="8.5" fill="#d62728">+44%</text>
+<text x="242.7" y="419.8" text-anchor="middle" font-size="8.5" fill="#d62728">-36%</text>
+<text x="294.9" y="419.8" text-anchor="middle" font-size="8.5" fill="#d62728">-66%</text>
+<text x="347.1" y="419.8" text-anchor="middle" font-size="8.5" fill="#d62728">+28%</text>
+<text x="399.3" y="419.8" text-anchor="middle" font-size="8.5" fill="#d62728">-37%</text>
+<text x="451.5" y="419.8" text-anchor="middle" font-size="8.5" fill="#d62728">-27%</text>
+<text x="503.7" y="419.8" text-anchor="middle" font-size="8.5" fill="#d62728">-242%</text>
+<text x="555.9" y="419.8" text-anchor="middle" font-size="8.5" fill="#d62728">+14%</text>
+<text x="54" y="434.8" text-anchor="end" font-size="9" fill="#9467bd">Fin CF</text>
+<text x="86.1" y="434.8" text-anchor="middle" font-size="8.5" fill="#9467bd">+20%</text>
+<text x="138.3" y="434.8" text-anchor="middle" font-size="8.5" fill="#9467bd">-158%</text>
+<text x="190.5" y="434.8" text-anchor="middle" font-size="8.5" fill="#9467bd">-10%</text>
+<text x="242.7" y="434.8" text-anchor="middle" font-size="8.5" fill="#9467bd">-23%</text>
+<text x="294.9" y="434.8" text-anchor="middle" font-size="8.5" fill="#9467bd">+22%</text>
+<text x="347.1" y="434.8" text-anchor="middle" font-size="8.5" fill="#9467bd">-56%</text>
+<text x="399.3" y="434.8" text-anchor="middle" font-size="8.5" fill="#9467bd">+24%</text>
+<text x="451.5" y="434.8" text-anchor="middle" font-size="8.5" fill="#9467bd">-26%</text>
+<text x="503.7" y="434.8" text-anchor="middle" font-size="8.5" fill="#9467bd">+58%</text>
+<text x="555.9" y="434.8" text-anchor="middle" font-size="8.5" fill="#9467bd">-243%</text>
+<text x="54" y="449.8" text-anchor="end" font-size="9" fill="#ff7f0e">FCF</text>
+<text x="86.1" y="449.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+59%</text>
+<text x="138.3" y="449.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+33%</text>
+<text x="190.5" y="449.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">-10%</text>
+<text x="242.7" y="449.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+24%</text>
+<text x="294.9" y="449.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">-8%</text>
+<text x="347.1" y="449.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+68%</text>
+<text x="399.3" y="449.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">-49%</text>
+<text x="451.5" y="449.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+64%</text>
+<text x="503.7" y="449.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+58%</text>
+<text x="555.9" y="449.8" text-anchor="middle" font-size="8.5" fill="#ff7f0e">+39%</text>
+</svg></section>
+</main>
+<footer>Rendered from cached Alpha Vantage JSON · charts: Python-generated inline SVG (self-contained, no chart library)</footer>
+<div id="chart-tip"></div>
+<script>
+/* Instant tooltip: native SVG <title> is browser-throttled (slow to show / sometimes never).
+   This shows the exact value the moment the cursor is over a bar, trend-line segment, or point. */
+(function () {
+  var tip = document.getElementById("chart-tip");
+  var cur = null;
+  function place(e) {
+    var pad = 14, w = tip.offsetWidth, h = tip.offsetHeight;
+    var x = e.clientX + pad, y = e.clientY + pad;
+    if (x + w > window.innerWidth - 6) x = e.clientX - w - pad;
+    if (y + h > window.innerHeight - 6) y = e.clientY - h - pad;
+    tip.style.left = x + "px"; tip.style.top = y + "px";
+  }
+  document.addEventListener("pointermove", function (e) {
+    var t = e.target && e.target.closest ? e.target.closest("[data-tip]") : null;
+    if (!t) { if (cur) { tip.style.display = "none"; cur = null; } return; }
+    if (t !== cur) { cur = t; tip.textContent = t.getAttribute("data-tip"); tip.style.display = "block"; }
+    place(e);
+  }, { passive: true });
+  document.addEventListener("pointerleave", function () { tip.style.display = "none"; cur = null; }, true);
+})();
+</script>
+</body>
+</html>
